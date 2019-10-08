@@ -151,7 +151,7 @@ public class Interface extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+// button that tests username and password against a databse to verify the user has an account
     private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseClicked
         try {
 					Connection con = getConnection();
@@ -178,7 +178,7 @@ public class Interface extends javax.swing.JFrame {
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordActionPerformed
-
+//button takes you to register screen
     private void jButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseClicked
         RegisterForm r = new RegisterForm();
         r.setVisible(true);
@@ -187,7 +187,7 @@ public class Interface extends javax.swing.JFrame {
         r.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_jButton12MouseClicked
-
+//button takes you to calculator screen
     private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseClicked
         // TODO add your handling code here:
         Calculator c = new Calculator();
@@ -243,7 +243,8 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JPasswordField password;
     private javax.swing.JTextField userName;
     // End of variables declaration//GEN-END:variables
-public static Connection getConnection() throws Exception{
+//connection method to connect to database
+    public static Connection getConnection() throws Exception{
 		try {
 			String driver="com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://localhost:3306/cycle3";

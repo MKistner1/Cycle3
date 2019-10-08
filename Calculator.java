@@ -124,7 +124,7 @@ public class Calculator extends javax.swing.JFrame {
     private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_amountActionPerformed
-
+//button to calculate total of the currency you chose and the amount you entered
     private void calculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateActionPerformed
         // TODO add your handling code here:
         String[] names = getNames();
@@ -181,7 +181,7 @@ public class Calculator extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
-
+//webscraper that get values of all of the names from a table of cryptocurrencies from the cryptocurrencychart webstite
 static String[] getNames() {
 		final String url = 
                 "https://www.cryptocurrencychart.com/top/100";
@@ -206,7 +206,7 @@ static String[] getNames() {
         }
         return names;
 	}
-	//function to retrieve all prices from the table on the URL
+	////webscraper that get values of all of the prices from a table of cryptocurrencies from the cryptocurrencychart webstite
 	static String[] getPrices() {
 		final String url = 
                 "https://www.cryptocurrencychart.com/top/100";

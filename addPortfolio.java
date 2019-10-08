@@ -148,7 +148,7 @@ public class addPortfolio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//button that adds the currency you chose and  the amount you entered to the portfolio table
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             // TODO add your handling code here:
@@ -222,7 +222,7 @@ public class addPortfolio extends javax.swing.JFrame {
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
-
+//function to connect to the database
     public static Connection getConnection() throws Exception{
 		try {
 			String driver="com.mysql.cj.jdbc.Driver";

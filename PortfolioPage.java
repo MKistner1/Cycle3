@@ -30,6 +30,7 @@ public class PortfolioPage extends javax.swing.JFrame {
         initComponents();
         
     }
+    //starts the page by getting the values from the portfolio table that is linked to the user specific id number and returns it to a list value to be displayed
     public PortfolioPage(String i) throws Exception{
         initComponents();
         id.setText(i);
@@ -132,7 +133,7 @@ public class PortfolioPage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//button to return to the login page
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
         LoginPage l =new LoginPage(id.getText());
@@ -142,7 +143,7 @@ public class PortfolioPage extends javax.swing.JFrame {
         l.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_backActionPerformed
-
+//button to access the addCurrency page for you to add a currency to the portfolio table
     private void addCurrencyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCurrencyActionPerformed
         // TODO add your handling code here:
         addPortfolio a =new addPortfolio(id.getText());
@@ -194,7 +195,8 @@ public class PortfolioPage extends javax.swing.JFrame {
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-public static Connection getConnection() throws Exception{
+//function to connect to the database
+    public static Connection getConnection() throws Exception{
 		try {
 			String driver="com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://localhost:3306/cycle3";
@@ -210,6 +212,7 @@ public static Connection getConnection() throws Exception{
 		}
 		return null;
 	}
+    //webscraper that get values of all of the names from a table of cryptocurrencies from the cryptocurrencychart webstite
 static String[] getNames() {
 		final String url = 
                 "https://www.cryptocurrencychart.com/top/100";
@@ -234,7 +237,7 @@ static String[] getNames() {
         }
         return names;
 	}
-	//function to retrieve all prices from the table on the URL
+	//webscraper that get values of all of the prices from a table of cryptocurrencies from the cryptocurrencychart webstite
 	static String[] getPrices() {
 		final String url = 
                 "https://www.cryptocurrencychart.com/top/100";

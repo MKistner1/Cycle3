@@ -43,6 +43,8 @@ public class RegisterForm extends javax.swing.JFrame {
         password = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(234, 32, 39));
+        setForeground(java.awt.Color.red);
 
         user.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         user.setText("Username:");
@@ -107,7 +109,7 @@ public class RegisterForm extends javax.swing.JFrame {
     private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameActionPerformed
-
+//button that verifies the username is not taken and then adds it to the table of users
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         try {
             // TODO add your handling code here:
@@ -174,7 +176,8 @@ public class RegisterForm extends javax.swing.JFrame {
     private javax.swing.JLabel user;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
-public static Connection getConnection() throws Exception{
+//connection method to connect to database
+    public static Connection getConnection() throws Exception{
     try {
         String driver="com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/cycle3";

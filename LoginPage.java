@@ -24,9 +24,8 @@ public class LoginPage extends javax.swing.JFrame {
     }
     public LoginPage(String i){
         initComponents();
-        id.setText(i);
+        id.setText(i);//need id to use in the addPortfolio page later
         id.setVisible(false);
-        String s = id.getText();
         
     }
 
@@ -105,7 +104,7 @@ public class LoginPage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//button that takes you to the calculator
     private void calculatorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calculatorMouseClicked
         // TODO add your handling code here:
         Calculator c = new Calculator();
@@ -123,7 +122,7 @@ public class LoginPage extends javax.swing.JFrame {
     private void calculatorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculatorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_calculatorActionPerformed
-
+// button that takes you to your personal portfolio
     private void portfolioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_portfolioMouseClicked
         try {
             // TODO add your handling code here:
