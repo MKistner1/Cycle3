@@ -5,7 +5,10 @@
  */
 package cycle.pkg3;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,6 +26,8 @@ public class LoginPage extends javax.swing.JFrame {
         initComponents();
         id.setText(i);
         id.setVisible(false);
+        String s = id.getText();
+        
     }
 
     /**
@@ -53,6 +58,11 @@ public class LoginPage extends javax.swing.JFrame {
         });
 
         portfolio.setText("My Portfolio");
+        portfolio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                portfolioMouseClicked(evt);
+            }
+        });
         portfolio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 portfolioActionPerformed(evt);
@@ -108,17 +118,25 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void portfolioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_portfolioActionPerformed
         // TODO add your handling code here:
-        PortfolioPage p =new PortfolioPage(id.getText());
-        p.setVisible(true);
-        p.pack();
-        p.setLocationRelativeTo(null);
-        p.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
     }//GEN-LAST:event_portfolioActionPerformed
 
     private void calculatorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculatorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_calculatorActionPerformed
+
+    private void portfolioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_portfolioMouseClicked
+        try {
+            // TODO add your handling code here:
+            PortfolioPage p = new PortfolioPage(id.getText());
+            p.setVisible(true);
+            p.pack();
+            p.setLocationRelativeTo(null);
+            p.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.dispose();
+        } catch (Exception ex) {
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_portfolioMouseClicked
 
     /**
      * @param args the command line arguments

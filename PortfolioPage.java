@@ -5,7 +5,17 @@
  */
 package cycle.pkg3;
 
+import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
+import java.sql.DriverManager;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import java.sql.*;
+import javax.swing.JList;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 /**
  *
@@ -20,10 +30,37 @@ public class PortfolioPage extends javax.swing.JFrame {
         initComponents();
         
     }
-    public PortfolioPage(String i){
+    public PortfolioPage(String i) throws Exception{
         initComponents();
         id.setText(i);
         id.setVisible(false);
+        int t = parseInt(i);
+        Connection con = getConnection();
+        PreparedStatement stmt = con.prepareStatement("SELECT * FROM portfolio WHERE id='"+t+"'");
+        ResultSet rs = stmt.executeQuery();
+        int length = 1;
+        String[] s = new String[length];
+        String name,amount;
+        String[] names = getNames();
+        String[] prices = getPrices();
+        String price;
+        String realName;
+        String total;
+        Double d;
+        int temp=0;
+        while(rs.next()){
+            name = rs.getString("currency");
+            amount = rs.getString("amount");
+            price = pickPrice(names,prices,name);
+            realName = pickName(names,prices,name);
+            d= calculateValue(parseDouble(amount),parseDouble(price));
+            total = Double.toString(d);
+            s[temp]=(realName+ ": "+amount+"*"+price+"="+ total+",");
+            temp++;
+            length++;
+        }
+        JList<String> myList = new JList<String>(s);
+        jList1=myList;
     }
 
     /**
@@ -36,53 +73,84 @@ public class PortfolioPage extends javax.swing.JFrame {
     private void initComponents() {
 
         id = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        back = new javax.swing.JButton();
+        addCurrency = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        id.setText("jLabel1");
-
-        jButton1.setText("Add Currency");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        back.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        back.setText("Back");
+        back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                backActionPerformed(evt);
             }
         });
+
+        addCurrency.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        addCurrency.setText("Add Currency");
+        addCurrency.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCurrencyActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(id)
-                .addGap(21, 21, 21))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(485, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(addCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(id))
+                        .addGap(0, 9, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(id)
-                .addGap(415, 415, 415)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
-        addPortfolio a =new addPortfolio();
+        LoginPage l =new LoginPage(id.getText());
+        l.setVisible(true);
+        l.pack();
+        l.setLocationRelativeTo(null);
+        l.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_backActionPerformed
+
+    private void addCurrencyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCurrencyActionPerformed
+        // TODO add your handling code here:
+        addPortfolio a =new addPortfolio(id.getText());
         a.setVisible(true);
         a.pack();
         a.setLocationRelativeTo(null);
         a.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_addCurrencyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -120,9 +188,109 @@ public class PortfolioPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addCurrency;
+    private javax.swing.JButton back;
     private javax.swing.JLabel id;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-
-
+public static Connection getConnection() throws Exception{
+		try {
+			String driver="com.mysql.cj.jdbc.Driver";
+			String url = "jdbc:mysql://localhost:3306/cycle3";
+			String username = "root";
+			String password = "root";
+			Class.forName(driver);
+			
+			java.sql.Connection conn = DriverManager.getConnection(url,username,password);
+			return conn;
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+static String[] getNames() {
+		final String url = 
+                "https://www.cryptocurrencychart.com/top/100";
+		String[] names = new String[27];
+        int i = 0;
+        try {
+            final Document document = (Document) Jsoup.connect(url).get();
+            Elements tableHTML = document.select("table.market-cap-list tr");
+            for (Element row : tableHTML) {
+            	if(row.select("td.name").text()== "") {
+            		continue;
+            	}
+            	else {
+                  final String name = row.select("td.name").text() ;
+                  names[i]=name;
+                  i++;
+            	}
+        }
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return names;
+	}
+	//function to retrieve all prices from the table on the URL
+	static String[] getPrices() {
+		final String url = 
+                "https://www.cryptocurrencychart.com/top/100";
+		String[] prices = new String[27];
+        int i = 0;
+        try {
+            final Document document = (Document) Jsoup.connect(url).get();
+            Elements tableHTML = document.select("table.market-cap-list tr");
+            for (Element row : tableHTML) {
+            	if(row.select("td.name").text()== "") {
+            		continue;
+            	}
+            	else {
+                  final String price = row.select("td.price").text();
+                  String temp = price.replace(",", "");
+                  temp = temp.replace("$", "");
+                  prices[i]=temp;
+                  i++;
+            	}
+        }
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+		return prices;
+	}
+	//function that takes the selected name and finds the price value associated with that name and returns the price
+	static String pickPrice(String[] names, String[] prices, String crypto) {
+		String temp= "";
+		String n = "";
+		for (int i=0;i<names.length;i++) {
+			temp = names[i].toString();
+		if(temp.contains(crypto)) {
+			n = prices[i].toString();
+		}
+		
+	}
+		return n;
+		
+	}
+        static String pickName(String[] names, String[] prices, String crypto) {
+		String temp= "";
+		String n = "";
+		for (int i=0;i<names.length;i++) {
+			temp = names[i].toString();
+		if(temp.contains(crypto)) {
+			n = names[i];
+		}
+		
+	}
+		return n;
+		
+	}
+        static Double calculateValue(Double amount, Double price) {
+			
+			return amount*price;
+			
+		}
 }

@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,6 +30,7 @@ public class addPortfolio extends javax.swing.JFrame {
         initComponents();
         id.setText(i);
         id.setVisible(false);
+        
     }
 
     /**
@@ -80,6 +82,11 @@ public class addPortfolio extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jButton1.setText("CANCEL");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jButton2.setText("ADD");
@@ -146,9 +153,9 @@ public class addPortfolio extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             Connection con = getConnection();
-            int a = parseInt(id.getText());
+            int a = Integer.parseInt(id.getText());
             PreparedStatement stmt = con.prepareStatement("INSERT INTO portfolio (id,currency,amount) VALUES ('"+a+"','"+currency.getText()+"','"+amount.getText()+"')");
-            stmt.executeQuery();
+            stmt.executeUpdate();
         } catch (Exception ex) {
             Logger.getLogger(addPortfolio.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -163,6 +170,11 @@ public class addPortfolio extends javax.swing.JFrame {
     private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_amountActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,4 +239,5 @@ public class addPortfolio extends javax.swing.JFrame {
 		}
 		return null;
 	}
+    
 }
